@@ -1,15 +1,14 @@
 import dataWeather from "../Hooks/dataWeather";
-import HighlightCard from "./HighlightCard";
 import LeftPanel from './LeftPanel';
 import RightPanel from './RightPanel';
 import { useState } from 'react';
 
 export default function WeatherApp() {
 
-    const [lat, setLat] = useState(19.43); // Default latitude for Mexico City
-    const [lon, setLon] = useState(-99.13); // Default longitude for Mexico City
-    const { data, loading, error } = dataWeather()
-    const [direction, setDirection] = useState('N'); // Default direction
+    const [lat, setLat] = useState("19.36"); // Default latitude for Huix
+    const [lon, setLon] = useState("-99.35"); // Default longitude for Huix
+    const { data, loading, error } = dataWeather(lat, lon)
+
     if (loading) {
         return (
             <div className="flex justify-center items-center h-screen">
@@ -24,9 +23,8 @@ export default function WeatherApp() {
             </div>
         );
     }
-    console.log(data[0].wind?.deg);
-    const degrees = data[0].wind?.deg
-    console.log(degrees)
+    console.log(data)
+
 
 
     return (
@@ -34,25 +32,24 @@ export default function WeatherApp() {
             {/* Panel Izquierdo */}
             <div className="w-full  md:w-1/3 bg-[#1E213A]  p-6 flex flex-col items-center justify-between relative">
                 <LeftPanel
-                    temperature={data[0].main?.temp} // Convert from Kelvin to Celsius
-                    weather={data[0].weather[0]?.description}
-                    ubication={data[0].name}
+                    temperature={data.main?.temp}
+                    weather={data.weather[0]?.description}
+                    ubication={data.name}
+                    setLat={setLat}
+                    setLon={setLon}
                 />
             </div>
 
             {/* Panel Derecho */}
             <div className="w-full md:w-2/3 bg-[#100E1D] p-6 relative">
                 <RightPanel
-                    windSpeed={data[0].wind?.speed}
-                    humidity={data[0].main?.humidity}
-                    visibility={data[0].visibility}
-                    pressure={data[0].main?.pressure}
-                    degrees={data[0].wind?.deg} // Pasar la dirección del viento
+                    windSpeed={data.wind?.speed}
+                    humidity={data.main?.humidity}
+                    visibility={data.visibility}
+                    pressure={data.main?.pressure}
+                    degrees={data.wind?.deg}
                 />
             </div>
-            {/* <div className="hidden"><HighlightCard
-                degrees={data[0].wind?.deg}
-            /></div> */}
         </div>
     );
 }

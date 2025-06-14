@@ -1,15 +1,14 @@
 import { useState } from "react";
 import useCitiesData from "../Hooks/dataCities";
-export default function LeftPanel({ temperature, weather, ubication }) {
-    // Aquí irían los estados para la ciudad, temperatura, etc.
-    const [city, setCity] = useState('Mexico city');
+import useFechaActual from "../Hooks/useFechaActual";
+
+export default function LeftPanel({ temperature, weather, ubication, setLat, setLon }) {
+    const [city, setCity] = useState('');
     const [location, setLocation] = useState('');
-    // const [temperature, setTemperature] = useState(26);
-    // const [weatherDescription, setWeatherDescription] = useState('Broken Clouds');
-    // const [date, setDate] = useState('Sun, 2 Jul');
     const { cities, loading, error } = useCitiesData('/cities.json');
     const [panel, setPanel] = useState(true)
     const celsiusTemperature = (temperature - 273.15).toFixed(1);
+    const { fecha, diaSemana, mes } = useFechaActual()
 
     if (loading) {
         return (
@@ -32,12 +31,12 @@ export default function LeftPanel({ temperature, weather, ubication }) {
     }
     function handleSubmit(e) {
         e.preventDefault();
-        const formData = location
-        const filtrado = cities.filter((city) => city.name.toLowerCase() === formData.toLowerCase())
-        console.log(filtrado)
-        setCity(filtrado[0].name)
-        tooglePanel()
+        const filtrado = cities.filter((city) => city.name.toLowerCase() === location.toLowerCase())
+        setLat(filtrado[0].lat)
+        setLon(filtrado[0].lon)
         setLocation('')
+        tooglePanel()
+
     }
     const handleLocation = (e) => {
         e.preventDefault()
@@ -55,7 +54,7 @@ export default function LeftPanel({ temperature, weather, ubication }) {
                         <img src="/search.svg" alt="search" className="w-[25px] mx-2" />
                         <input onChange={handleLocation} name="inputlocation" type="text" placeholder="search location" className="text-white p-1" />
                     </form>
-                    <button className="text-white font-semibold text-lg bg-[#3c47e9] px-3 py-1 rounded-sm">Search</button>
+                    <button onClick={handleSubmit} className="text-white font-semibold text-lg bg-[#3c47e9] px-3 py-1 rounded-sm">Search</button>
                 </div>
             </div>
             <div name="panel1" className={`w-[100%] relative ${panel ? "flex" : "hidden"} flex-col items-center`}>
@@ -92,7 +91,7 @@ export default function LeftPanel({ temperature, weather, ubication }) {
 
                 {/* Fecha y locacion */}
                 <div className="w-full text-center text-[#88869D] text-sm flex flex-col items-center mb-10 gap-5">
-                    <p className="mb-2">Today • Sun, 2 Jul</p>
+                    <p className="mb-2">Today • {diaSemana}, {fecha} {mes}</p>
                     <div className="flex items-center">
                         {/* Icono de ubicación */}
                         <img src="/location_on.svg" alt="locationLogo" className="w-[20px]" />

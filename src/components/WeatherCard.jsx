@@ -14,7 +14,7 @@ export default function WeatherCard({ data }) {
         <div className="bg-[#1E213A] p-4 flex flex-col items-center justify-center text-white text-center rounded-lg shadow-md">
             <p className="text-md mb-2">{data.day}</p>
             <img src="/04n.png" alt="cloud" className='mr-5 mb-5 w-[60px]' />
-            <div className="flex justify-center gap-5 mt-4">
+            <div className="flex justify-center gap-3 mt-4">
                 <span className="font-semibold">{data.tempC}°C</span>
                 <span className="text-[#A09FB1] ml-2">{data.tempF}°F</span>
             </div>

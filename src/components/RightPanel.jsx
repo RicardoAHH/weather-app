@@ -1,15 +1,18 @@
 import WeatherCard from './WeatherCard';
 import HighlightCard from './HighlightCard';
 import { useEffect, useState } from 'react';
+import useFechasProximosDias from "../Hooks/useFechasProximosDias";
 
 export default function RightPanel({ windSpeed, humidity, visibility, pressure, degrees }) {
-    const forecastData = [
-        { day: 'Tomorrow', tempC: 27, tempF: 81, icon: 'cloud' }, // Usarás tus propios iconos
-        { day: 'Mon, 3 Jul', tempC: 27, tempF: 81, icon: 'cloud' },
-        { day: 'Tue, 4 Jul', tempC: 28, tempF: 82, icon: 'cloud' },
-        { day: 'Wed, 5 Jul', tempC: 29, tempF: 84, icon: 'cloud' },
-        { day: 'Thu, 6 Jul', tempC: 31, tempF: 88, icon: 'cloud' },
-    ];
+    const dias = useFechasProximosDias();
+    console.log(dias)
+    // const forecastData = [
+    //     { day: 'Tomorrow', tempC: 27, tempF: 81, icon: 'cloud' }, // Usarás tus propios iconos
+    //     { day: `${dias[2].diaSemana},${dias[2].fecha} ${dias[2].mes}`, tempC: 27, tempF: 81, icon: 'cloud' },
+    //     { day: `${dias[3].diaSemana},${dias[3].fecha} ${dias[3].mes}`, tempC: 28, tempF: 82, icon: 'cloud' },
+    //     { day: `${dias[4].diaSemana},${dias[4].fecha} ${dias[4].mes}`, tempC: 29, tempF: 84, icon: 'cloud' },
+    //     { day: `${dias[5].diaSemana},${dias[5].fecha} ${dias[5].mes}`, tempC: 31, tempF: 88, icon: 'cloud' },
+    // ];
     const [windDirection, setWindDirection] = useState("")
     console.log(degrees)
     // const grados = `${degrees}`
@@ -48,13 +51,13 @@ export default function RightPanel({ windSpeed, humidity, visibility, pressure, 
             </div>
 
             {/* 5-Day Forecast */}
-            <div className='flex items-center justify-center'>
+            {/* <div className='flex items-center justify-center'>
                 <div className="w-[70%]  grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 mb-12">
                     {forecastData.map((day, index) => (
                         <WeatherCard key={index} data={day} />
                     ))}
                 </div>
-            </div>
+            </div> */}
 
 
             {/* Today's Highlights */}
