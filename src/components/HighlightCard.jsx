@@ -1,9 +1,9 @@
 // src/components/HighlightCard.jsx
 import React from 'react';
 
-export default function HighlightCard({ title, value, unit, direction, progressBarValue }) {
+export default function HighlightCard({ degrees, title, value, unit, direction, progressBarValue }) {
     const isHumidity = title === 'Humidity'; // Detectar si es la tarjeta de Humedad para la barra de progreso
-
+    console.log(degrees)
     return (
         <div className="bg-[#1E213A] p-6 flex flex-col items-center justify-center text-white text-center rounded-lg shadow-md">
             <h3 className="text-base mb-4">{title}</h3>
@@ -14,7 +14,7 @@ export default function HighlightCard({ title, value, unit, direction, progressB
             {direction && (
                 <div className="flex items-center text-sm text-[#A09FB1] mt-5">
                     <div className="w-6 h-6 bg-[#6E707A] rounded-full flex items-center justify-center mr-2">
-                        <img src="/navigation.svg" alt="navigation" className='w-[15px]' />
+                        <img src="/navigation.svg" alt="navigation" className='w-[15px]' style={{ transform: `rotate(${degrees}deg)` }} />
                     </div>
                     {direction}
                 </div>
