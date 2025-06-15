@@ -1,7 +1,7 @@
 // src/components/WeatherCard.jsx
 import React from 'react';
 
-export default function WeatherCard({ data }) {
+export default function WeatherCard({ data, unit }) {
     // Aquí puedes manejar la lógica para elegir el icono correcto basado en data.icon
     const WeatherIcon = () => (
         // Placeholder para tu componente de icono
@@ -15,8 +15,8 @@ export default function WeatherCard({ data }) {
             <p className="text-md mb-2">{data.day}</p>
             <img src="/04n.png" alt="cloud" className='mr-5 mb-5 w-[60px]' />
             <div className="flex justify-center gap-3 mt-4">
-                <span className="font-semibold">{data.tempC}°C</span>
-                <span className="text-[#A09FB1] ml-2">{data.tempF}°F</span>
+                <span className="font-semibold">{data.tempMax}°{unit}</span>
+                <span className="text-[#A09FB1] ml-2">{data.tempMin}°{unit}</span>
             </div>
         </div>
     );

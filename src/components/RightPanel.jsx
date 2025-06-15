@@ -1,18 +1,17 @@
 import WeatherCard from './WeatherCard';
 import HighlightCard from './HighlightCard';
 import { useEffect, useState } from 'react';
-import useFechasProximosDias from "../Hooks/useFechasProximosDias";
+import useFechasProximosDias from '../Hooks/useFechasProximosDias';
 
-export default function RightPanel({ windSpeed, humidity, visibility, pressure, degrees }) {
+export default function RightPanel({ windSpeed, humidity, visibility, pressure, degrees, windSpeedUnit, visibilityUnit, minMax, unit }) {
     const dias = useFechasProximosDias();
-    console.log(dias)
-    // const forecastData = [
-    //     { day: 'Tomorrow', tempC: 27, tempF: 81, icon: 'cloud' }, // Usarás tus propios iconos
-    //     { day: `${dias[2].diaSemana},${dias[2].fecha} ${dias[2].mes}`, tempC: 27, tempF: 81, icon: 'cloud' },
-    //     { day: `${dias[3].diaSemana},${dias[3].fecha} ${dias[3].mes}`, tempC: 28, tempF: 82, icon: 'cloud' },
-    //     { day: `${dias[4].diaSemana},${dias[4].fecha} ${dias[4].mes}`, tempC: 29, tempF: 84, icon: 'cloud' },
-    //     { day: `${dias[5].diaSemana},${dias[5].fecha} ${dias[5].mes}`, tempC: 31, tempF: 88, icon: 'cloud' },
-    // ];
+    const forecastData = [
+        { day: 'Tomorrow', tempMax: `${minMax.tempDia1[1]}`, tempMin: minMax.tempDia1[0], icon: 'cloud' }, // Usarás tus propios iconos
+        { day: `${dias[2].diaSemana},${dias[2].fecha} ${dias[2].mes}`, tempMax: minMax.tempDia2[1], tempMin: minMax.tempDia2[0], icon: 'cloud' },
+        { day: `${dias[3].diaSemana},${dias[3].fecha} ${dias[3].mes}`, tempMax: minMax.tempDia3[1], tempMin: minMax.tempDia3[0], icon: 'cloud' },
+        { day: `${dias[4].diaSemana},${dias[4].fecha} ${dias[4].mes}`, tempMax: minMax.tempDia4[1], tempMin: minMax.tempDia4[0], icon: 'cloud' },
+        { day: `${dias[5].diaSemana},${dias[5].fecha} ${dias[5].mes}`, tempMax: minMax.tempDia5[1], tempMin: minMax.tempDia5[0], icon: 'cloud' },
+    ];
     const [windDirection, setWindDirection] = useState("")
     console.log(degrees)
     // const grados = `${degrees}`
@@ -38,26 +37,20 @@ export default function RightPanel({ windSpeed, humidity, visibility, pressure, 
         }
     }, [degrees])
 
+
+
     return (
         <div className="text-white p-4">
-            {/* Temperature Toggle */}
-            <div className="flex justify-end mb-8 gap-2">
-                <button className="bg-[#ffffff] text-blue-950 w-10 h-10 rounded-full font-bold text-lg flex items-center justify-center hover:bg-[#8F909A] transition-colors duration-200">
-                    °C
-                </button>
-                <button className="bg-[#585676] text-white w-10 h-10 rounded-full font-bold text-lg flex items-center justify-center hover:bg-[#8F909A] transition-colors duration-200">
-                    °F
-                </button>
-            </div>
+
 
             {/* 5-Day Forecast */}
-            {/* <div className='flex items-center justify-center'>
+            <div className='flex items-center justify-center'>
                 <div className="w-[70%]  grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 mb-12">
                     {forecastData.map((day, index) => (
-                        <WeatherCard key={index} data={day} />
+                        <WeatherCard key={index} data={day} unit={unit} />
                     ))}
                 </div>
-            </div> */}
+            </div>
 
 
             {/* Today's Highlights */}
@@ -69,7 +62,7 @@ export default function RightPanel({ windSpeed, humidity, visibility, pressure, 
                         <HighlightCard
                             title="Wind status"
                             value={windSpeed}
-                            unit="ms"
+                            unit={windSpeedUnit}
                             direction={windDirection}
                             degrees={degrees}
                         />
@@ -83,7 +76,7 @@ export default function RightPanel({ windSpeed, humidity, visibility, pressure, 
                     <HighlightCard
                         title="Visibility"
                         value={visibility}
-                        unit="km"
+                        unit={visibilityUnit}
                     />
                     <HighlightCard
                         title="Air Pressure"

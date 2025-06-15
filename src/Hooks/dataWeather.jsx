@@ -19,8 +19,8 @@ export default function dataWeather(lat, lon) {
     }
 
     useEffect(() => {
-        // fetchData(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=75fb36639c33f494bad6a773d6153cc7`)
-        fetchData('/example.json')
+        fetchData(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=75fb36639c33f494bad6a773d6153cc7`)
+        // fetchData('/example.json')
     }, [lat, lon]);
 
     return { data, loading, error };

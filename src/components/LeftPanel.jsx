@@ -2,12 +2,12 @@ import { useState } from "react";
 import useCitiesData from "../Hooks/dataCities";
 import useFechaActual from "../Hooks/useFechaActual";
 
-export default function LeftPanel({ temperature, weather, ubication, setLat, setLon }) {
+export default function LeftPanel({ temperature, weather, ubication, setLat, setLon, unit }) {
     const [city, setCity] = useState('');
     const [location, setLocation] = useState('');
     const { cities, loading, error } = useCitiesData('/cities.json');
     const [panel, setPanel] = useState(true)
-    const celsiusTemperature = (temperature - 273.15).toFixed(1);
+
     const { fecha, diaSemana, mes } = useFechaActual()
 
     if (loading) {
@@ -81,7 +81,7 @@ export default function LeftPanel({ temperature, weather, ubication, setLat, set
 
                 {/* Temperatura */}
                 <div className="text-white text-[100px] font-semibold mb-6">
-                    {celsiusTemperature}<span className="text-[50px] text-gray-400 ">°C</span>
+                    {temperature}<span className="text-[50px] text-gray-400 ">°{unit}</span>
                 </div>
 
                 {/* Descripcion del clima */}
