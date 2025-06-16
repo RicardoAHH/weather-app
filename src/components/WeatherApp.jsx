@@ -52,7 +52,9 @@ export default function WeatherApp() {
             </div>
         );
     }
-    console.log(datas)
+
+    let icons = [datas.list[6].weather[0].main, datas.list[14].weather[0].main, datas.list[22].weather[0].main, datas.list[30].weather[0].main, datas.list[38].weather[0].main]
+    console.log(icons)
     let dia1 = []
     let dia2 = []
     let dia3 = []
@@ -124,7 +126,7 @@ export default function WeatherApp() {
                     ubication={data.name}
                     setLat={setLat}
                     setLon={setLon}
-
+                    icono={data.weather[0].main}
                 />
             </div>
             <div className="flex flex-col md:w-2/3">
@@ -149,6 +151,7 @@ export default function WeatherApp() {
                         pressure={data.main?.pressure}
                         minMax={minMax}
                         unit={displayTempUnit}
+                        icons={icons}
                     />
                 </div>
             </div>

@@ -1,15 +1,33 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useCitiesData from "../Hooks/dataCities";
 import useFechaActual from "../Hooks/useFechaActual";
 
-export default function LeftPanel({ temperature, weather, ubication, setLat, setLon, unit }) {
+export default function LeftPanel({ temperature, weather, ubication, setLat, setLon, unit, icono }) {
     const [city, setCity] = useState('');
     const [location, setLocation] = useState('');
     const { cities, loading, error } = useCitiesData('/cities.json');
     const [panel, setPanel] = useState(true)
+    const [icon, setIcon] = useState("/02d.png")
 
     const { fecha, diaSemana, mes } = useFechaActual()
 
+    useEffect(() => {
+        if (icono === "Rain") {
+            setIcon("/10d.png")
+        } else if (icono === "Thunderstorm") {
+            setIcon("/11d.png")
+        } else if (icono === "Drizzle") {
+            setIcon("/09d.png")
+        } else if (icono === "Snow") {
+            setIcon("/13d.png")
+        } else if (icono === "Atmosphere") {
+            setIcon("/50d.png")
+        } else if (icono === "Clear") {
+            setIcon("/01d.png")
+        } else if (icono === "Clouds") {
+            setIcon("/02d.png")
+        }
+    })
     if (loading) {
         return (
             <div className="flex justify-center items-center h-screen">
@@ -45,6 +63,7 @@ export default function LeftPanel({ temperature, weather, ubication, setLat, set
     }
 
 
+
     return (
         <>
             <div name="panel2" className={`${panel ? "hidden" : "flex"} flex-col justify-center items-end w-[100%] gap-3`} >
@@ -75,7 +94,7 @@ export default function LeftPanel({ temperature, weather, ubication, setLat, set
                 {/* Icono del clima */}
                 <div className="mb-16">
                     <div className="w-48 h-48 rounded-full flex items-center justify-center">
-                        <img src="/public/04n.png" alt="cloud" className="" />
+                        <img src={icon} alt="weather" className="" />
                     </div>
                 </div>
 

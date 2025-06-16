@@ -3,14 +3,68 @@ import HighlightCard from './HighlightCard';
 import { useEffect, useState } from 'react';
 import useFechasProximosDias from '../Hooks/useFechasProximosDias';
 
-export default function RightPanel({ windSpeed, humidity, visibility, pressure, degrees, windSpeedUnit, visibilityUnit, minMax, unit }) {
+export default function RightPanel({ windSpeed, humidity, visibility, pressure, degrees, windSpeedUnit, visibilityUnit, minMax, unit, icons }) {
     const dias = useFechasProximosDias();
+    const [icon1, setIcon1] = useState("/02d.png")
+    const [icon2, setIcon2] = useState("/02d.png")
+    const [icon3, setIcon3] = useState("/02d.png")
+    const [icon4, setIcon4] = useState("/02d.png")
+    const [icon5, setIcon5] = useState("/02d.png")
+    useEffect(() => {
+        for (let i = 1; i <= 5; i++) {
+            if (icons[i] === "Rain") {
+                setIcon1("/10d.png")
+                setIcon2("/10d.png")
+                setIcon3("/10d.png")
+                setIcon4("/10d.png")
+                setIcon5("/10d.png")
+            } else if (icons[0] === "Thunderstorm") {
+                setIcon1("/11d.png")
+                setIcon2("/11d.png")
+                setIcon3("/11d.png")
+                setIcon4("/11d.png")
+                setIcon5("/11d.png")
+            } else if (icons[0] === "Drizzle") {
+                setIcon1("/09d.png")
+                setIcon2("/09d.png")
+                setIcon3("/09d.png")
+                setIcon4("/09d.png")
+                setIcon5("/09d.png")
+            } else if (icons[0] === "Snow") {
+                setIcon1("/13d.png")
+                setIcon2("/13d.png")
+                setIcon3("/13d.png")
+                setIcon4("/13d.png")
+                setIcon5("/13d.png")
+            } else if (icons[0] === "Atmosphere") {
+                setIcon1("/50d.png")
+                setIcon2("/50d.png")
+                setIcon3("/50d.png")
+                setIcon4("/50d.png")
+                setIcon5("/50d.png")
+            } else if (icons[0] === "Clear") {
+                setIcon1("/01d.png")
+                setIcon2("/01d.png")
+                setIcon3("/01d.png")
+                setIcon4("/01d.png")
+                setIcon5("/01d.png")
+            } else if (icons[0] === "Clouds") {
+                setIcon1("/02d.png")
+                setIcon2("/02d.png")
+                setIcon3("/02d.png")
+                setIcon4("/02d.png")
+                setIcon5("/02d.png")
+            }
+
+        }
+
+    })
     const forecastData = [
-        { day: 'Tomorrow', tempMax: `${minMax.tempDia1[1]}`, tempMin: minMax.tempDia1[0], icon: 'cloud' }, // Usarás tus propios iconos
-        { day: `${dias[2].diaSemana},${dias[2].fecha} ${dias[2].mes}`, tempMax: minMax.tempDia2[1], tempMin: minMax.tempDia2[0], icon: 'cloud' },
-        { day: `${dias[3].diaSemana},${dias[3].fecha} ${dias[3].mes}`, tempMax: minMax.tempDia3[1], tempMin: minMax.tempDia3[0], icon: 'cloud' },
-        { day: `${dias[4].diaSemana},${dias[4].fecha} ${dias[4].mes}`, tempMax: minMax.tempDia4[1], tempMin: minMax.tempDia4[0], icon: 'cloud' },
-        { day: `${dias[5].diaSemana},${dias[5].fecha} ${dias[5].mes}`, tempMax: minMax.tempDia5[1], tempMin: minMax.tempDia5[0], icon: 'cloud' },
+        { day: 'Tomorrow', tempMax: `${minMax.tempDia1[1]}`, tempMin: minMax.tempDia1[0], icon: icon1 }, // Usarás tus propios iconos
+        { day: `${dias[2].diaSemana},${dias[2].fecha} ${dias[2].mes}`, tempMax: minMax.tempDia2[1], tempMin: minMax.tempDia2[0], icon: icon2 },
+        { day: `${dias[3].diaSemana},${dias[3].fecha} ${dias[3].mes}`, tempMax: minMax.tempDia3[1], tempMin: minMax.tempDia3[0], icon: icon3 },
+        { day: `${dias[4].diaSemana},${dias[4].fecha} ${dias[4].mes}`, tempMax: minMax.tempDia4[1], tempMin: minMax.tempDia4[0], icon: icon4 },
+        { day: `${dias[5].diaSemana},${dias[5].fecha} ${dias[5].mes}`, tempMax: minMax.tempDia5[1], tempMin: minMax.tempDia5[0], icon: icon5 },
     ];
     const [windDirection, setWindDirection] = useState("")
     console.log(degrees)
