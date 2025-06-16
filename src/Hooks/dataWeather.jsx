@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+const WEATHER_FIRST_KEY = import.meta.env.VITE_WEATHER_FIRST_KEY;
 
 export default function dataWeather(lat, lon) {
     const [data, setData] = useState([]);
@@ -19,7 +20,7 @@ export default function dataWeather(lat, lon) {
     }
 
     useEffect(() => {
-        fetchData(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=75fb36639c33f494bad6a773d6153cc7`)
+        fetchData(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${WEATHER_FIRST_KEY}`)
         // fetchData('/example.json')
     }, [lat, lon]);
 

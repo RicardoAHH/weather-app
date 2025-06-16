@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
+const WEATHER_SECOND_KEY = import.meta.env.VITE_WEATHER_SECOND_KEY;
 
 export default function useDataWeatherFive(lat, lon, units) {
 
@@ -11,7 +12,7 @@ export default function useDataWeatherFive(lat, lon, units) {
         setLoading(true);
         setError(null);
         try {
-            const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${currentLat}&lon=${currentLon}&appid=709d0f91ef536a959cf2c1c7a7b06fed&units=${currentUnits}`;
+            const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${currentLat}&lon=${currentLon}&appid=${WEATHER_SECOND_KEY}&units=${currentUnits}`;
             const response = await axios.get(url);
             setDatas(response.data);
         } catch (err) {
