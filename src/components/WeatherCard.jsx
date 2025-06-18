@@ -10,7 +10,7 @@ export default function WeatherCard({ data, unit }) {
     );
 
     return (
-        <div className="bg-[#1E213A] p-4 flex flex-col items-center justify-center text-white text-center rounded-lg shadow-md ">
+        <div className="dark:bg-[#1E213A] bg-white dark p-4 flex flex-col items-center justify-center text-white text-center rounded-lg shadow-md ">
             <p className="text-md mb-2">{data.day}</p>
             <img src={data.icon} alt="cloud" className='mr-5 mb-5 w-[60px]' />
             <div className="flex justify-center gap-3 lg:gap-0 lg:flex-col xl:flex-row mt-4">

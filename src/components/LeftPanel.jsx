@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import useCitiesData from "../Hooks/dataCities";
 import useFechaActual from "../Hooks/useFechaActual";
-
+import useGeoLoc from "../Hooks/geoLoc";
 export default function LeftPanel({ temperature, weather, ubication, setLat, setLon, unit, icono }) {
     const [location, setLocation] = useState('');
     const [suggestions, setSuggestions] = useState([]);
     const { cities, loading, error } = useCitiesData('/cities.json');
     const [panel, setPanel] = useState(true)
     const [icon, setIcon] = useState("/02d.png")
-
+    const { loc, loading: loadingLoc, error: errorLoc } = useGeoLoc()
     const { fecha, diaSemana, mes } = useFechaActual()
 
     useEffect(() => {
@@ -28,7 +28,7 @@ export default function LeftPanel({ temperature, weather, ubication, setLat, set
             setIcon("/02d.png")
         }
     }, [icono])
-    if (loading) {
+    if (loading || loadingLoc) {
         return (
             <div className="flex justify-center items-center h-screen">
                 <p className="text-lg text-gray-700">Cargando ciudades...</p>
@@ -36,12 +36,32 @@ export default function LeftPanel({ temperature, weather, ubication, setLat, set
         );
     }
 
-    if (error) {
+    if (error || errorLoc) {
         return (
             <div className="flex justify-center items-center h-screen bg-red-100 border border-red-400 text-red-700 p-4">
                 <p className="text-lg">Error al cargar las ciudades: {error.message}</p>
             </div>
         );
+    }
+
+    console.log(loc.city)
+
+    function toogleGeoLoc() {
+        if (loc.city) {
+            const cityToSearch = loc.city.trim();
+            const filtrado = cities.filter((city) => city.name.toLowerCase() === cityToSearch.toLowerCase());
+            if (filtrado.length > 0) {
+                setLat(filtrado[0].lat);
+                setLon(filtrado[0].lon);
+                setLocation('');
+                setSuggestions([]);
+                tooglePanel();
+            } else {
+                alert("Ciudad no encontrada. Por favor, intenta de nuevo.");
+            }
+        } else {
+            alert("No se pudo obtener la ubicación actual.");
+        }
     }
 
     function tooglePanel() {
@@ -128,7 +148,7 @@ export default function LeftPanel({ temperature, weather, ubication, setLat, set
                     <button onClick={tooglePanel} className="bg-[#6E707A] hover:bg-[#8F909A] text-white px-4 py-3 rounded shadow-md text-sm font-semibold transition-colors duration-200">
                         Search for Places
                     </button>
-                    <button className="bg-[#6E707A] hover:bg-[#8F909A] text-white p-2 rounded-full shadow-md transition-colors duration-200">
+                    <button onClick={toogleGeoLoc} className="bg-[#6E707A] hover:bg-[#8F909A] text-white p-2 rounded-full shadow-md transition-colors duration-200">
                         <img src="/location.svg" alt="location" className="w-[30px]" />
                     </button>
                 </div>

@@ -12,6 +12,7 @@ export default function WeatherApp() {
     const [isMetric, setIsMetric] = useState(true);
     const apiUnits = isMetric ? 'metric' : 'imperial';
     const { datas, loading: loadingFive, error: errorFive } = useDataWeatherFive(lat, lon, apiUnits);
+
     const [kelvinTemperature, setKelvinTemperature] = useState(null);
     const [originalWindSpeed, setOriginalWindSpeed] = useState(null);
     const [originalVisibility, setOriginalVisibility] = useState(null);
@@ -52,6 +53,7 @@ export default function WeatherApp() {
             </div>
         );
     }
+
 
     let icons = [datas.list[6].weather[0].main, datas.list[14].weather[0].main, datas.list[22].weather[0].main, datas.list[30].weather[0].main, datas.list[38].weather[0].main]
     console.log(icons)
@@ -131,13 +133,24 @@ export default function WeatherApp() {
             </div>
             <div className="flex flex-col md:w-2/3">
                 {/* Temperature Toggle */}
-                <div className="flex items-center justify-end mt-8 mr-10 gap-2">
-                    <button onClick={() => toggleMetricUnit('metric')} className="bg-[#ffffff] text-blue-950 w-10 h-10 rounded-full font-bold text-lg flex items-center justify-center hover:bg-[#8F909A] transition-colors duration-200">
-                        °C
-                    </button>
-                    <button onClick={() => toggleMetricUnit('imperial')} className="bg-[#585676] text-white w-10 h-10 rounded-full font-bold text-lg flex items-center justify-center hover:bg-[#8F909A] transition-colors duration-200">
-                        °F
-                    </button>
+                <div className="flex items-center justify-between mt-6 mr-10 gap-2">
+                    <div name="darkmode" className="gap-5 ml-10 bg-gray-500 flex items-center justify-center p-2 rounded-full opacity-70 ">
+                        <button>
+                            <img src="/01d.png" alt="sun" className="w-[30px] opacity-50 hover:opacity-100 transition-opacity duration-200" />
+                        </button>
+                        <button>
+                            <img src="/01n.png" alt="moon" className="w-[25px] opacity-50 hover:opacity-100 transition-opacity duration-200" />
+                        </button>
+                    </div>
+                    <div className="flex items-center justify-center gap-2">
+                        <button onClick={() => toggleMetricUnit('metric')} className="bg-[#ffffff] text-blue-950 w-10 h-10 rounded-full font-bold text-lg flex items-center justify-center hover:bg-[#8F909A] transition-colors duration-200">
+                            °C
+                        </button>
+                        <button onClick={() => toggleMetricUnit('imperial')} className="bg-[#585676] text-white w-10 h-10 rounded-full font-bold text-lg flex items-center justify-center hover:bg-[#8F909A] transition-colors duration-200">
+                            °F
+                        </button>
+                    </div>
+
                 </div>
                 {/* Panel Derecho */}
                 <div className="w-full  bg-[#100E1D] relative">
