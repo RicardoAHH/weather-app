@@ -110,7 +110,7 @@ export default function WeatherApp() {
     const displayVisibilityUnit = isMetric ? 'km' : 'miles';
 
     const toggleMetricUnit = (unitType) => {
-        setIsMetric(unitType === 'metric'); // 'metric' para Celsius/ms/km, 'imperial' para Fahrenheit/mph/miles
+        setIsMetric(unitType === 'metric');
     };
 
 
@@ -120,8 +120,8 @@ export default function WeatherApp() {
             {/* Panel Izquierdo */}
             <div className="w-full  md:w-1/3 bg-[#1E213A]  p-6 flex flex-col items-center justify-between relative">
                 <LeftPanel
-                    temperature={displayTemperature} // Pasa la temperatura seleccionada
-                    unit={displayTempUnit} // Pasa la unidad actual
+                    temperature={displayTemperature}
+                    unit={displayTempUnit}
                     weather={data.weather[0]?.description}
                     ubication={data.name}
                     setLat={setLat}

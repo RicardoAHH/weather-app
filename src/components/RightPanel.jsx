@@ -99,7 +99,7 @@ export default function RightPanel({ windSpeed, humidity, visibility, pressure, 
 
             {/* 5-Day Forecast */}
             <div className='flex items-center justify-center'>
-                <div className="w-[70%]  grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 mb-12">
+                <div className="w-[70%]  grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-12">
                     {forecastData.map((day, index) => (
                         <WeatherCard key={index} data={day} unit={unit} />
                     ))}

@@ -3,8 +3,8 @@ import useCitiesData from "../Hooks/dataCities";
 import useFechaActual from "../Hooks/useFechaActual";
 
 export default function LeftPanel({ temperature, weather, ubication, setLat, setLon, unit, icono }) {
-    const [city, setCity] = useState('');
     const [location, setLocation] = useState('');
+    const [suggestions, setSuggestions] = useState([]);
     const { cities, loading, error } = useCitiesData('/cities.json');
     const [panel, setPanel] = useState(true)
     const [icon, setIcon] = useState("/02d.png")
@@ -27,7 +27,7 @@ export default function LeftPanel({ temperature, weather, ubication, setLat, set
         } else if (icono === "Clouds") {
             setIcon("/02d.png")
         }
-    })
+    }, [icono])
     if (loading) {
         return (
             <div className="flex justify-center items-center h-screen">
@@ -45,35 +45,77 @@ export default function LeftPanel({ temperature, weather, ubication, setLat, set
     }
 
     function tooglePanel() {
-        setPanel((state) => !state)
+        setPanel((state) => !state);
+        if (!panel) {
+            setSuggestions([]);
+            setLocation('');
+        }
     }
     function handleSubmit(e) {
         e.preventDefault();
-        const filtrado = cities.filter((city) => city.name.toLowerCase() === location.toLowerCase())
-        setLat(filtrado[0].lat)
-        setLon(filtrado[0].lon)
-        setLocation('')
-        tooglePanel()
-
+        const cityToSearch = location.trim();
+        if (!cityToSearch) return
+        const filtrado = cities.filter((city) => city.name.toLowerCase() === cityToSearch.toLowerCase());
+        if (filtrado.length > 0) {
+            setLat(filtrado[0].lat);
+            setLon(filtrado[0].lon);
+            setLocation('');
+            setSuggestions([]);
+            tooglePanel();
+        } else {
+            alert("Ciudad no encontrada. Por favor, intenta de nuevo.");
+        }
     }
     const handleLocation = (e) => {
         e.preventDefault()
         const newValue = e.target.value
-        setLocation(newValue)
+        setLocation(newValue);
+        if (newValue.length > 0) {
+            const filteredSuggestions = cities
+                .filter((city) =>
+                    city.name.toLowerCase().startsWith(newValue.toLowerCase())
+                )
+                .slice(0, 7);
+            console.log(filteredSuggestions)
+            setSuggestions(filteredSuggestions);
+        } else {
+            setSuggestions([]);
+        }
     }
 
-
+    const handleSuggestionClick = (cityName, lat, lon) => {
+        setLocation(cityName);
+        setLat(lat);
+        setLon(lon);
+        setSuggestions([]);
+        tooglePanel();
+    };
 
     return (
         <>
             <div name="panel2" className={`${panel ? "hidden" : "flex"} flex-col justify-center items-end w-[100%] gap-3`} >
                 <button onClick={tooglePanel} className="w-[20px] text-white text-2xl">X</button>
-                <div className="flex w-[100%] items-center justify-around">
+                <div className="flex w-[100%] items-center justify-around relative">
                     <form onSubmit={handleSubmit} className="border-1 border-white flex" >
                         <img src="/search.svg" alt="search" className="w-[25px] mx-2" />
-                        <input onChange={handleLocation} name="inputlocation" type="text" placeholder="search location" className="text-white p-1" />
+                        <input onChange={handleLocation} value={location} name="inputlocation" type="text" placeholder="search location" className="text-white p-1" />
                     </form>
                     <button onClick={handleSubmit} className="text-white font-semibold text-lg bg-[#3c47e9] px-3 py-1 rounded-sm">Search</button>
+
+                    {/* Sugerencias */}
+                    {suggestions.length > 0 && (
+                        <ul className="absolute top-full left-0 mt-2 w-[80%] bg-gray-700 text-white rounded-md shadow-lg z-10 max-h-60 overflow-y-auto">
+                            {suggestions.map((city) => (
+                                <li
+                                    key={city.id}
+                                    onClick={() => handleSuggestionClick(city.name, city.lat, city.lon)}
+                                    className="px-4 py-2 cursor-pointer hover:bg-gray-600 border-b border-gray-600 last:border-b-0"
+                                >
+                                    {city.name}, {city.country}
+                                </li>
+                            ))}
+                        </ul>
+                    )}
                 </div>
             </div>
             <div name="panel1" className={`w-[100%] relative ${panel ? "flex" : "hidden"} flex-col items-center`}>
@@ -112,6 +154,7 @@ export default function LeftPanel({ temperature, weather, ubication, setLat, set
                 <div className="w-full text-center text-[#88869D] text-sm flex flex-col items-center mb-10 gap-5">
                     <p className="mb-2">Today • {diaSemana}, {fecha} {mes}</p>
                     <div className="flex items-center">
+
                         {/* Icono de ubicación */}
                         <img src="/location_on.svg" alt="locationLogo" className="w-[20px]" />
                         <span>{ubication}</span>

@@ -1,8 +1,7 @@
-// src/components/HighlightCard.jsx
 import React from 'react';
 
 export default function HighlightCard({ degrees, title, value, unit, direction, progressBarValue }) {
-    const isHumidity = title === 'Humidity'; // Detectar si es la tarjeta de Humedad para la barra de progreso
+    const isHumidity = title === 'Humidity';
     console.log(degrees)
     return (
         <div className="bg-[#1E213A] p-6 flex flex-col items-center justify-center text-white text-center rounded-lg shadow-md">
