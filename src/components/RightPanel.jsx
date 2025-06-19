@@ -109,7 +109,7 @@ export default function RightPanel({ windSpeed, humidity, visibility, pressure, 
 
             {/* Today's Highlights */}
             <div className='flex flex-col items-center justify-center'>
-                <div className='w-[70%]'><h2 className="text-2xl font-bold mb-6">Today's Highlights</h2></div>
+                <div className='w-[70%]'><h2 className="text-2xl text-[#2e2e8b] dark:text-white font-bold mb-6">Today's Highlights</h2></div>
 
                 <div className="w-[70%] grid grid-cols-1 sm:grid-cols-2 gap-6">
                     {degrees !== undefined && (

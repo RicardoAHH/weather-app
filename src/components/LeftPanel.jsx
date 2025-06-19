@@ -114,9 +114,9 @@ export default function LeftPanel({ temperature, weather, ubication, setLat, set
     return (
         <>
             <div name="panel2" className={`${panel ? "hidden" : "flex"} flex-col justify-center items-end w-[100%] gap-3`} >
-                <button onClick={tooglePanel} className="w-[20px] text-white text-2xl">X</button>
+                <button onClick={tooglePanel} className="w-[20px] text-black dark:text-white text-2xl">X</button>
                 <div className="flex w-[100%] items-center justify-around relative">
-                    <form onSubmit={handleSubmit} className="border-1 border-white flex" >
+                    <form onSubmit={handleSubmit} className="border-1 border-black dark:border-white flex" >
                         <img src="/search.svg" alt="search" className="w-[25px] mx-2" />
                         <input onChange={handleLocation} value={location} name="inputlocation" type="text" placeholder="search location" className="text-white p-1" />
                     </form>
@@ -124,7 +124,7 @@ export default function LeftPanel({ temperature, weather, ubication, setLat, set
 
                     {/* Sugerencias */}
                     {suggestions.length > 0 && (
-                        <ul className="absolute top-full left-0 mt-2 w-[80%] bg-gray-700 text-white rounded-md shadow-lg z-10 max-h-60 overflow-y-auto">
+                        <ul className="absolute top-full left-0 mt-2 w-[80%] bg-[#2e2e8b] dark:bg-gray-700 text-white rounded-md shadow-lg z-10 max-h-60 overflow-y-auto">
                             {suggestions.map((city) => (
                                 <li
                                     key={city.id}
@@ -145,10 +145,10 @@ export default function LeftPanel({ temperature, weather, ubication, setLat, set
                 </div>
 
                 <div className="w-full flex justify-around items-center mb-16 ">
-                    <button onClick={tooglePanel} className="bg-[#6E707A] hover:bg-[#8F909A] text-white px-4 py-3 rounded shadow-md text-sm font-semibold transition-colors duration-200">
+                    <button onClick={tooglePanel} className="bg-[#2e2e8b] dark:bg-[#6E707A] hover:bg-[#8F909A] text-white px-4 py-3 rounded shadow-md text-sm font-semibold transition-colors duration-200">
                         Search for Places
                     </button>
-                    <button onClick={toogleGeoLoc} className="bg-[#6E707A] hover:bg-[#8F909A] text-white p-2 rounded-full shadow-md transition-colors duration-200">
+                    <button onClick={toogleGeoLoc} className="bg-[#2e2e8b] dark:bg-[#6E707A] hover:bg-[#8F909A] text-white p-2 rounded-full shadow-md transition-colors duration-200">
                         <img src="/location.svg" alt="location" className="w-[30px]" />
                     </button>
                 </div>
@@ -161,17 +161,17 @@ export default function LeftPanel({ temperature, weather, ubication, setLat, set
                 </div>
 
                 {/* Temperatura */}
-                <div className="text-white text-[100px] font-semibold mb-6">
-                    {temperature}<span className="text-[50px] text-gray-400 ">°{unit}</span>
+                <div className="text-[#2e2e8b] dark:text-white text-[100px] font-semibold mb-6">
+                    {temperature}<span className="text-[50px] text-[#525281] dark:text-gray-400 ">°{unit}</span>
                 </div>
 
                 {/* Descripcion del clima */}
-                <div className="text-[#A09FB1] text-2xl mb-8 font-semibold">
+                <div className="text-[#2e2e8b] dark:text-[#A09FB1] text-2xl mb-8 font-semibold">
                     {weather}
                 </div>
 
                 {/* Fecha y locacion */}
-                <div className="w-full text-center text-[#88869D] text-sm flex flex-col items-center mb-10 gap-5">
+                <div className="w-full text-center text-[#2e2e8b] dark:text-[#88869D] text-sm flex flex-col items-center mb-10 gap-5">
                     <p className="mb-2">Today • {diaSemana}, {fecha} {mes}</p>
                     <div className="flex items-center">
 

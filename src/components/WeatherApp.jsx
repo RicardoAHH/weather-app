@@ -115,12 +115,30 @@ export default function WeatherApp() {
         setIsMetric(unitType === 'metric');
     };
 
+    const applyDarkMode = () => {
+        const body = document.querySelector('body');
+        body.classList.add('dark');
+    }
+    const applyLightMode = () => {
+        const body = document.querySelector('body');
+        body.classList.remove('dark');
+    }
+
+    const toogleDarkMode = () => {
+        const body = document.querySelector('body');
+        body.classList.toggle('dark');
+        const panels = document.querySelectorAll('.panel');
+        panels.forEach(panel => {
+            panel.classList.toggle('bg-[#100E1D]');
+            panel.classList.toggle('bg-[#1E213A]');
+        });
+    };
 
     return (
-        <div className="flex flex-col md:flex-row w-full  bg-[#100E1D]">
+        <div className="flex flex-col md:flex-row w-full bg-[#bee2fa] dark:bg-[#100E1D]">
 
             {/* Panel Izquierdo */}
-            <div className="w-full  md:w-1/3 bg-[#1E213A]  p-6 flex flex-col items-center justify-between relative">
+            <div className="w-full  md:w-1/3 bg-[#729dfa] dark:bg-[#1E213A]  p-6 flex flex-col items-center justify-between relative">
                 <LeftPanel
                     temperature={displayTemperature}
                     unit={displayTempUnit}
@@ -134,26 +152,26 @@ export default function WeatherApp() {
             <div className="flex flex-col md:w-2/3">
                 {/* Temperature Toggle */}
                 <div className="flex items-center justify-between mt-6 mr-10 gap-2">
-                    <div name="darkmode" className="gap-5 ml-10 bg-gray-500 flex items-center justify-center p-2 rounded-full opacity-70 ">
-                        <button>
+                    <div name="darkmode" className="gap-5 ml-10 bg-[#2e2e8b] dark:bg-gray-500 flex items-center justify-center p-2 rounded-full opacity-70 ">
+                        <button onClick={applyLightMode} className="hover:opacity-100 transition-opacity duration-200">
                             <img src="/01d.png" alt="sun" className="w-[30px] opacity-50 hover:opacity-100 transition-opacity duration-200" />
                         </button>
-                        <button>
+                        <button onClick={applyDarkMode} className="hover:opacity-100 transition-opacity duration-200">
                             <img src="/01n.png" alt="moon" className="w-[25px] opacity-50 hover:opacity-100 transition-opacity duration-200" />
                         </button>
                     </div>
                     <div className="flex items-center justify-center gap-2">
-                        <button onClick={() => toggleMetricUnit('metric')} className="bg-[#ffffff] text-blue-950 w-10 h-10 rounded-full font-bold text-lg flex items-center justify-center hover:bg-[#8F909A] transition-colors duration-200">
+                        <button onClick={() => toggleMetricUnit('metric')} className="bg-gray-200 dark:bg-[#ffffff] text-blue-950 w-10 h-10 rounded-full font-bold text-lg flex items-center justify-center hover:bg-[#8F909A] transition-colors duration-200">
                             °C
                         </button>
-                        <button onClick={() => toggleMetricUnit('imperial')} className="bg-[#585676] text-white w-10 h-10 rounded-full font-bold text-lg flex items-center justify-center hover:bg-[#8F909A] transition-colors duration-200">
+                        <button onClick={() => toggleMetricUnit('imperial')} className="bg-[#2e2e8b] dark:bg-[#585676] text-white w-10 h-10 rounded-full font-bold text-lg flex items-center justify-center hover:bg-[#8F909A] transition-colors duration-200">
                             °F
                         </button>
                     </div>
 
                 </div>
                 {/* Panel Derecho */}
-                <div className="w-full  bg-[#100E1D] relative">
+                <div className="w-full bg-[#bee2fa] dark:bg-[#100E1D] relative">
                     <RightPanel
                         windSpeed={displayWindSpeed}
                         windSpeedUnit={displayWindSpeedUnit}
